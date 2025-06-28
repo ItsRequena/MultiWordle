@@ -1,0 +1,29 @@
+.contentBox{
+    width:70px;
+    height: 70px;
+    inset: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Helvetica;
+    font-weight: 800;
+    backface-visibility: hidden;
+    border: 2px solid rgb(26, 26, 26);
+    border-radius: 10%;
+    margin-bottom: 10px;
+}
+
+.contentBackground{
+    width: 800px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px ;
+}
+
+.letterInBox{
+    font-family: 'Helvetica';
+    color: black;
+    
+}

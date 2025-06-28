@@ -1,0 +1,66 @@
+/* Reset general */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Contenedor principal */
+.contentBackground {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+}
+
+/* Cada fila de 5 celdas */
+.wrapperBox {
+    display: flex;
+    gap: 10px; /* espacio horizontal entre celdas */
+}
+
+/* Cada celda */
+.contentBox {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #444;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+}
+
+/* Celda con letra correcta en la posición correcta */
+.contentBox.green {
+    background-color: #6aaa64; /* verde Wordle */
+    border-color: #6aaa64;
+    color: white;
+}
+
+/* Celda con letra correcta en posición incorrecta */
+.contentBox.yellow {
+    background-color: #c9b458; /* amarillo Wordle */
+    border-color: #c9b458;
+    color: white;
+}
+
+/* Celda con letra incorrecta */
+.contentBox.white {
+    background-color: grey; /* amarillo Wordle */
+    border-color: grey;
+    color: white;
+}
+
+
+/* Texto dentro de cada celda */
+.contentBox p {
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: white;
+    user-select: none;
+    margin: 0;
+}

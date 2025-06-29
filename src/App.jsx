@@ -3,6 +3,7 @@ import { ContentBody } from './components/ContentBody.jsx'
 import { Header } from './components/Header.jsx'
 import { WordProvider } from './context/words.jsx'
 import { WordInfo } from './components/WordInfo.jsx'
+import { Menu } from './components/Menu.jsx'
 
 function App() {
   const headerItems = ['W', 'O', 'R', 'D', 'L', 'E']
@@ -19,12 +20,15 @@ function App() {
 
   return (
     <>
+    <Menu/>
+    <main style={{ padding: '2rem' }}>
       <Header items={headerItems} height={headerHeight} width={headerWidth} gap={headerGap} font={headerFont} createdBy={false}/>
       <WordProvider>
         <ContentBody/>
         <WordInfo/>
       </WordProvider>
       <Header items={footerItems} height={footerHeight} width={footerWidth} gap={footerGap} font={footerFont} createdBy={true}/>
+    </main>
     </>
   )
 }

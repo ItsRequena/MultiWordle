@@ -1,0 +1,85 @@
+/* Botón hamburguesa */
+.menu-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
+    font-size: 1.5rem;
+    background: #252424;
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+  border-color: #252424; /* cambia el borde al pasar el mouse */
+}
+
+button:focus,
+button:active {
+  outline: none;
+}
+
+/* Contenedor del menú */
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100%;
+    /* background-color: light dark; */
+    background-color: #252424;
+    box-shadow: 0 0 2px rgb(68, 68, 68);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    padding: 1rem;
+    z-index: 999;
+}
+
+/* Estado abierto */
+.side-menu.open {
+  transform: translateX(0);
+}
+
+/* Contenido del menú */
+.side-menu .menu-title {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.side-menu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.side-menu li {
+  margin: 1rem 0;
+  text-align: left;
+}
+
+.side-menu .contentOptions {
+  margin-top: 20px;
+}
+
+.side-menu a {
+    font-size: 1em;      /* Ajusta al tamaño típico de un h4 */
+    font-weight: bold;
+    margin: 1em 0;
+    display: block;        /* Para que se comporte como un h4 si lo necesitas */
+    color: inherit;        /* Usa el color del texto por defecto */
+    text-decoration: none; /* Quita el subrayado */
+    text-decoration: none;
+    color: white;
+}
+
+.side-menu a:hover:not(.blocked){
+    background-color: rgb(68, 68, 68);
+}
+
+.side-menu .blocked{
+    margin-top: 40px;
+    color: rgb(100, 100, 100);
+    font-size: 1rem;
+}
+

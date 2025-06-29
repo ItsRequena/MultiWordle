@@ -1,18 +1,16 @@
 import { useEffect, useState, useContext } from 'react'
 import { WordContext } from "../context/words.jsx"
 import './ContentBox.css'
-import confetti from 'canvas-confetti';
+import confetti from 'canvas-confetti'
+import {getCellColorClass} from '../hooks/getCellColorClass.js'
+
+const FILES = 6;
+const LETTERS = 5;
 
 export function ContentBody(){
-    const {board, checkWord} = useContext(WordContext)
-    const [letters, setLetters] = useState(Array(5).fill([null,'']))
+    const {board, checkWord, finalWord, win} = useContext(WordContext)
+    const [letters, setLetters] = useState(Array(LETTERS).fill([null,'']))
     const [attempt, setAttempt] = useState(0)
-    
-    // console.log('CONTENIDO EN CONTENTBODY')
-    // console.log('Board:',board)
-    // console.log('Attempt:',attempt)
-    // console.log('Letters:',letters)
-    // console.log('Longitud letters:',letters.length)
 
     const getLetterPositionToInsert = () => {
         for(let i=0; i<letters.length; i++){
@@ -20,27 +18,75 @@ export function ContentBody(){
                 return i;
             }
         }
-        return null;
+        return LETTERS;
     }
 
-    const getCellColorClass = (i, j) => {
+    const getColorCell = (i, j) => {
+        let cell = '';
         if (i < attempt) {
-            const cell = board[i][j][1];
-            if (cell === 'W') return 'white';  
-            if (cell === 'G') return 'green';  
-            if (cell === 'Y') return 'yellow';
+            cell = board[i][j][1];
         }
-        return '';
+        return getCellColorClass(cell)
     }
+
+    const showSlideModal = (message, time) => {
+        // Crear el modal
+        const modal = document.createElement('div');
+        modal.id = 'slideModal';
+        modal.textContent = message;
+        document.body.appendChild(modal);
+
+        // Forzar reflow para que la transición se aplique
+        void modal.offsetWidth;
+
+        // Activar clase que desliza
+        modal.classList.add('show');
+
+        // Esperar 2 segundos y luego desvanecer
+        setTimeout(() => {
+        modal.classList.add('fadeOut');
+        }, time);
+
+        // Eliminar del DOM después de que termine la transición (1s después del fade)
+        setTimeout(() => {
+        modal.remove();
+        }, time + 1000);
+    }
+
+    const shakeWrapperBox = () => {
+        const element = document.querySelector(`.wrapperBox-${attempt}`);
+        if (!element) return;
+
+        element.classList.add('shake');
+
+        // Eliminar la clase después de la animación para que se pueda reutilizar
+        setTimeout(() => {
+        element.classList.remove('shake');
+        }, 500); // Duración de la animación (debe coincidir con el CSS)
+    }
+
+    useEffect(() => {
+        if(win) return;
+        const boxes = document.querySelectorAll(`.wrapperBox.wrapperBox-${attempt} .contentBox`);
+        const position = getLetterPositionToInsert();
+        if (boxes[position]) { 
+            boxes[position].style.border = '2px solid rgb(144, 202, 249)';
+        }
+
+        for(let i=0; i<LETTERS; i++){
+            if(i != position) boxes[i].style.border = '2px solid #444';
+        }
+    }, [letters])
 
     useEffect(() => {
 
         const handleKeyDown = (event) => {
-            console.log('Tecla presionada:', event.key);
+
+            if(win) return;
+
             const positionToInsert = getLetterPositionToInsert()
 
             if (event.key === 'Backspace') {
-                console.log('Se presionó Backspace');
 
                 if(positionToInsert == 0) return;
 
@@ -51,27 +97,33 @@ export function ContentBody(){
             }
 
             if (event.key === 'Enter') {
-                console.log('Se presionó Enter');
 
-                if(positionToInsert != null ){
+                if(positionToInsert != LETTERS ){
+
+                    showSlideModal('Palabra incompleta', 2000)
+                    shakeWrapperBox()
                     return;
                 }
 
                 const goal = checkWord(letters, attempt);
                 if(goal){
                     confetti({
-                        particleCount: 100,
-                        spread: 70,
-                        origin: { y: 0.6 }
+                        particleCount: 300,
+                        spread: 100,
+                        origin: { y: 0.5 }
                     });
                 }
 
+                if(!goal && attempt+1 == FILES){
+                    showSlideModal(`${finalWord}`, 5000)
+                }
+
                 // Actualizar valores del nuevo intento
-                setLetters(Array(5).fill([null,'']));
+                setLetters(Array(LETTERS).fill([null,'']));
                 setAttempt(attempt + 1);
             }   
 
-            if (event.repeat || !/^[a-zA-Z]$/.test(event.key) || positionToInsert == null ) 
+            if (event.repeat || !/^[a-zA-Z]$/.test(event.key) || positionToInsert == LETTERS) 
             {
                 return;
             }
@@ -94,16 +146,15 @@ export function ContentBody(){
         <>
         <div className='contentBackground'>
             { 
-                Array.from({length: 6},(_,i) => (
-                    <div key={i} className='wrapperBox'>
+                Array.from({length: FILES},(_,i) => (
+                    <div key={i} className={`wrapperBox wrapperBox-${i}`}>
                         {
-                            Array.from({length: 5},(_,j) => (
+                            Array.from({length: LETTERS},(_,j) => (
                                 <div 
                                     key={`${i}-${j}`} 
-                                    className={`contentBox ${getCellColorClass(i, j)}`}>
+                                    className={`contentBox ${getColorCell(i, j)}`}>
                                     <p >
                                         { i == attempt ? letters[j] : board[i][j][0]}
-                                        {/* { i == attempt ? 'L' : 'B'} */}
                                     </p>
                                 </div>
                             ))

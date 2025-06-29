@@ -7,6 +7,7 @@ export function WordProvider({children}) {
     const [finalWord, setFinalWord] = useState('')
     const [usedLetters, setUsedLetters] = useState([])
     const [board, setBoard] = useState(Array.from({ length: 6 }, () => Array(5).fill([null,''])))
+    const [win, setWin] = useState(false);
 
     const quitarAcentos = (word) => {
         if(word.includes('ñ')) return word;
@@ -15,7 +16,6 @@ export function WordProvider({children}) {
 
     useEffect(() => {
         const randomIndex = Math.floor(Math.random() * wordList.length)
-        console.log(quitarAcentos(wordList[randomIndex]).toUpperCase())
         setFinalWord(quitarAcentos(wordList[randomIndex]).toUpperCase())
     },[])
 
@@ -56,10 +56,6 @@ export function WordProvider({children}) {
 
 
     const checkWord = (wordArray, attempt) => {
-        // console.log('Entro en la funcion checkWord');
-        // console.log('WordArray', wordArray)
-        // console.log('Attempt',attempt)
-        // console.log('UsedLetters',usedLetters)
 
         // Comprobar letras
         const newWordArray = checkLetterToLetter(wordArray);
@@ -69,14 +65,16 @@ export function WordProvider({children}) {
         newBoard[attempt] = newWordArray;
         setBoard(newBoard);
 
-        // Comprobar palabra
-        const word = newWordArray.map(par => par[0]).join('');
-        if(word == finalWord)
-            return true;
-
         // Aumentar las letras usadas
         const newLetters = [...new Set([...usedLetters, ...newWordArray])];
         setUsedLetters(newLetters);
+
+        // Comprobar palabra
+        const word = newWordArray.map(par => par[0]).join('');
+        if(word == finalWord){
+            setWin(true);
+            return true;
+        }
 
         return false;
     }
@@ -85,7 +83,9 @@ export function WordProvider({children}) {
         <WordContext.Provider value={{
             usedLetters,
             board,
-            checkWord
+            checkWord,
+            finalWord,
+            win
         }}>
             {children}
         </WordContext.Provider>

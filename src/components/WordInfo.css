@@ -1,29 +1,42 @@
-.contentBox{
-    width:70px;
-    height: 70px;
-    inset: 0px;
+
+.letterBox {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #3f4752;
+    border-radius: 8px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-family: Helvetica;
-    font-weight: 800;
-    backface-visibility: hidden;
-    border: 2px solid rgb(26, 26, 26);
-    border-radius: 10%;
-    margin-bottom: 10px;
+    justify-content: center;
+    background-color: #3f4752;
 }
 
-.contentBackground{
-    width: 800px;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px ;
+/* Celda con letra correcta en la posición correcta */
+.letterBox.green {
+    background-color: #6aaa64; /* verde Wordle */
+    border-color: #6aaa64;
+    color: white;
 }
 
-.letterInBox{
-    font-family: 'Helvetica';
-    color: black;
-    
+/* Celda con letra correcta en posición incorrecta */
+.letterBox.yellow {
+    background-color: #c9b458; /* amarillo Wordle */
+    border-color: #c9b458;
+    color: white;
+}
+
+/* Celda con letra incorrecta */
+.letterBox.white {
+    background-color: grey; /* amarillo Wordle */
+    border-color: grey;
+    color: white;
+}
+
+
+.letterBox p {
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 1rem;
+    color: white;
+    user-select: none;
+    margin: 0;
 }

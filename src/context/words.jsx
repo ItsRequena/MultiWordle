@@ -1,6 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 import {wordList} from '../mocks/words.json'
 
+const FILES = 6;
+const LETTERS = 5;
+
 export const WordContext = createContext()
 
 export function WordProvider({children}) {
@@ -8,7 +11,9 @@ export function WordProvider({children}) {
     const [usedLetters, setUsedLetters] = useState([])
     const [board, setBoard] = useState(Array.from({ length: 6 }, () => Array(5).fill([null,''])))
     const [win, setWin] = useState(false);
-
+    const [letters, setLetters] = useState(Array(LETTERS).fill([null,'']))
+    const [attempt, setAttempt] = useState(0)
+    
     const quitarAcentos = (word) => {
         if(word.includes('ñ')) return word;
         return word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -19,6 +24,7 @@ export function WordProvider({children}) {
         setFinalWord(quitarAcentos(wordList[randomIndex]).toUpperCase())
     },[])
 
+    // Funcion para comparar palabra introducida con la palabra a acertar y devolver la palabra y sus aciertos
     const checkLetterToLetter = (wordArray) => {
         const newWordArray = JSON.parse(JSON.stringify(wordArray)); // copia profunda
         const finalWordArray = finalWord.split('');
@@ -54,7 +60,7 @@ export function WordProvider({children}) {
         return newWordArray;
     }
 
-
+    // Funcion para comparar palabra introducida y la palabra a acertar
     const checkWord = (wordArray, attempt) => {
 
         // Comprobar letras
@@ -85,7 +91,13 @@ export function WordProvider({children}) {
             board,
             checkWord,
             finalWord,
-            win
+            win,
+            letters,
+            setLetters,
+            attempt,
+            setAttempt,
+            LETTERS,
+            FILES
         }}>
             {children}
         </WordContext.Provider>

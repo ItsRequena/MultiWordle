@@ -31,6 +31,10 @@
     color: white;
 }
 
+.letterBox:not(.green):not(.yellow):not(.white):hover {
+  background-color: rgb(144, 202, 249);
+  border-color: rgb(144, 202, 249);
+}
 
 .letterBox p {
     font-family: Helvetica, sans-serif;

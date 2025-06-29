@@ -1,26 +1,16 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useContext } from 'react'
 import { WordContext } from "../context/words.jsx"
 import './ContentBox.css'
 import confetti from 'canvas-confetti'
 import {getCellColorClass} from '../hooks/getCellColorClass.js'
-
-const FILES = 6;
-const LETTERS = 5;
+import {showSlideModal} from '../hooks/showSlideModal.js'
+import {getLetterPositionToInsert} from '../hooks/getLetterPositionToInsert.js'
+import {shakeWrapperBox} from '../hooks/shakeWrapperBox.js'
 
 export function ContentBody(){
-    const {board, checkWord, finalWord, win} = useContext(WordContext)
-    const [letters, setLetters] = useState(Array(LETTERS).fill([null,'']))
-    const [attempt, setAttempt] = useState(0)
+    const {board, checkWord, finalWord, win, letters, setLetters, attempt, setAttempt, LETTERS, FILES} = useContext(WordContext)
 
-    const getLetterPositionToInsert = () => {
-        for(let i=0; i<letters.length; i++){
-            if(letters[i][0] == null){
-                return i;
-            }
-        }
-        return LETTERS;
-    }
-
+    // Funcion para obtener devolver el color a pintar de cada celda
     const getColorCell = (i, j) => {
         let cell = '';
         if (i < attempt) {
@@ -29,46 +19,11 @@ export function ContentBody(){
         return getCellColorClass(cell)
     }
 
-    const showSlideModal = (message, time) => {
-        // Crear el modal
-        const modal = document.createElement('div');
-        modal.id = 'slideModal';
-        modal.textContent = message;
-        document.body.appendChild(modal);
-
-        // Forzar reflow para que la transición se aplique
-        void modal.offsetWidth;
-
-        // Activar clase que desliza
-        modal.classList.add('show');
-
-        // Esperar 2 segundos y luego desvanecer
-        setTimeout(() => {
-        modal.classList.add('fadeOut');
-        }, time);
-
-        // Eliminar del DOM después de que termine la transición (1s después del fade)
-        setTimeout(() => {
-        modal.remove();
-        }, time + 1000);
-    }
-
-    const shakeWrapperBox = () => {
-        const element = document.querySelector(`.wrapperBox-${attempt}`);
-        if (!element) return;
-
-        element.classList.add('shake');
-
-        // Eliminar la clase después de la animación para que se pueda reutilizar
-        setTimeout(() => {
-        element.classList.remove('shake');
-        }, 500); // Duración de la animación (debe coincidir con el CSS)
-    }
-
+    // Efecto para pintar el recuadro de la letra a insertar
     useEffect(() => {
         if(win) return;
         const boxes = document.querySelectorAll(`.wrapperBox.wrapperBox-${attempt} .contentBox`);
-        const position = getLetterPositionToInsert();
+        const position = getLetterPositionToInsert(letters, LETTERS);
         if (boxes[position]) { 
             boxes[position].style.border = '2px solid rgb(144, 202, 249)';
         }
@@ -78,14 +33,12 @@ export function ContentBody(){
         }
     }, [letters])
 
+    // Efecto para contemplar cualquier accion realizada con el teclado
     useEffect(() => {
-
         const handleKeyDown = (event) => {
-
             if(win) return;
 
-            const positionToInsert = getLetterPositionToInsert()
-
+            const positionToInsert = getLetterPositionToInsert(letters, LETTERS)
             if (event.key === 'Backspace') {
 
                 if(positionToInsert == 0) return;
@@ -101,7 +54,7 @@ export function ContentBody(){
                 if(positionToInsert != LETTERS ){
 
                     showSlideModal('Palabra incompleta', 2000)
-                    shakeWrapperBox()
+                    shakeWrapperBox(attempt)
                     return;
                 }
 
@@ -123,7 +76,7 @@ export function ContentBody(){
                 setAttempt(attempt + 1);
             }   
 
-            if (event.repeat || !/^[a-zA-Z]$/.test(event.key) || positionToInsert == LETTERS) 
+            if (event.repeat || !/^[a-zA-ZñÑ]$/.test(event.key) || positionToInsert == LETTERS) 
             {
                 return;
             }

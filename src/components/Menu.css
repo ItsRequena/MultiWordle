@@ -66,15 +66,22 @@ button:active {
     font-size: 1em;      /* Ajusta al tamaño típico de un h4 */
     font-weight: bold;
     margin: 1em 0;
-    display: block;        /* Para que se comporte como un h4 si lo necesitas */
+    display: flex;        /* Para que se comporte como un h4 si lo necesitas */
     color: inherit;        /* Usa el color del texto por defecto */
     text-decoration: none; /* Quita el subrayado */
-    text-decoration: none;
     color: white;
+    align-items: center;      /* Centra verticalmente */
+    gap: 8px;                 /* Espacio entre ícono y texto */
+
+  padding: 5px 5px;
+  transition: all 0.2s ease;
 }
 
 .side-menu a:hover:not(.blocked){
     background-color: rgb(68, 68, 68);
+    border-left: 4px solid white;
+    transform: scale(1.05);
+    color: white;
 }
 
 .side-menu .blocked{

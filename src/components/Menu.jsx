@@ -19,23 +19,29 @@ export function Menu() {
                 <li><h4 className='blocked' href="#">Modos de Juego</h4></li>
                 <li>
                     <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-grid2x2 size-4">
+                            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+                            <path d="M3 12h18"></path>
+                            <path d="M12 3v18"></path>
+                        </svg>
                         Normal
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        {/* <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 8px;">
-                            <circle cx="12" cy="12" r="10" stroke="black" strokeWidth="2" />
-                        </svg> */}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-globe size-4">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" x2="22" y1="12" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
                         Paises
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        {/* <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 8px;">
-                            <circle cx="12" cy="12" r="10" stroke="black" strokeWidth="2" />
-                            <path d="M6 12h12M12 6v12" stroke="black" strokeWidth="2" />
-                        </svg> */}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-tshirt size-4">
+                        <path d="M4 4L8 2l4 2 4-2 4 2v3a2 2 0 0 1-2 2h-1v11H7V9H6a2 2 0 0 1-2-2V4z" />
+                        </svg>
                         Jugadores
                     </a>
                 </li>

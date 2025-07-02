@@ -1,6 +1,11 @@
+let inSlide = false;
+
 // Funcion para mostrar modal descendiente
 export function showSlideModal(message, time) {
         // Crear el modal
+        if(inSlide) return
+        
+        inSlide = true;
         const modal = document.createElement('div');
         modal.id = 'slideModal';
         modal.textContent = message;
@@ -14,11 +19,12 @@ export function showSlideModal(message, time) {
 
         // Esperar 2 segundos y luego desvanecer
         setTimeout(() => {
-        modal.classList.add('fadeOut');
+            modal.classList.add('fadeOut');
+            inSlide = false;
         }, time);
 
         // Eliminar del DOM después de que termine la transición (1s después del fade)
         setTimeout(() => {
-        modal.remove();
+            modal.remove();
         }, time + 1000);
     }

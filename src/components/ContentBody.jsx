@@ -21,7 +21,7 @@ export function ContentBody(){
 
     // Efecto para pintar el recuadro de la letra a insertar
     useEffect(() => {
-        if(win) return;
+        if(win || attempt == FILES) return;
         const boxes = document.querySelectorAll(`.wrapperBox.wrapperBox-${attempt} .contentBox`);
         const position = getLetterPositionToInsert(letters, LETTERS);
         if (boxes[position]) { 
@@ -65,6 +65,9 @@ export function ContentBody(){
                         spread: 100,
                         origin: { y: 0.5 }
                     });
+
+                    showSlideModal(`Enhorabuena!`, 5000)
+
                 }
 
                 if(!goal && attempt+1 == FILES){

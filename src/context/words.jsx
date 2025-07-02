@@ -14,14 +14,16 @@ export function WordProvider({children}) {
     const [letters, setLetters] = useState(Array(LETTERS).fill([null,'']))
     const [attempt, setAttempt] = useState(0)
     
-    const quitarAcentos = (word) => {
-        if(word.includes('ñ')) return word;
-        return word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const generateWord = () => {
+        const randomIndex = Math.floor(Math.random() * wordList.length)
+        let newWord = wordList[randomIndex];
+        if(newWord.includes('ñ')) return newWord;
+        newWord = newWord.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        setFinalWord(newWord.toUpperCase());
     }
 
     useEffect(() => {
-        const randomIndex = Math.floor(Math.random() * wordList.length)
-        setFinalWord(quitarAcentos(wordList[randomIndex]).toUpperCase())
+        generateWord();
     },[])
 
     // Funcion para comparar palabra introducida con la palabra a acertar y devolver la palabra y sus aciertos
@@ -85,11 +87,28 @@ export function WordProvider({children}) {
         return false;
     }
 
+    const isOver = () => {
+        return win || attempt == FILES;
+    }
+
+    const resetGame = () => {
+        setLetters(Array(LETTERS).fill([null,'']));
+        setAttempt(0);
+        setBoard(Array.from({ length: 6 }, () => Array(5).fill([null,''])));
+        setWin(false);
+        setUsedLetters([]);
+        generateWord();
+    }
+
+
     return (
         <WordContext.Provider value={{
             usedLetters,
             board,
+            setBoard,
             checkWord,
+            resetGame,
+            isOver,
             finalWord,
             win,
             letters,

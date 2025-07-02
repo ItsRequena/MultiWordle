@@ -21,16 +21,16 @@ function App() {
 
   return (
     <>
-    <Menu/>
-    <main style={{ padding: '2rem' }}>
-      <Header items={headerItems} height={headerHeight} width={headerWidth} gap={headerGap} font={headerFont} createdBy={false}/>
-      <WordProvider>
-        <ContentBody/>
-        <ResetGame/>
-        <WordInfo/>
-      </WordProvider>
-      <Header items={footerItems} height={footerHeight} width={footerWidth} gap={footerGap} font={footerFont} createdBy={true}/>
-    </main>
+    <WordProvider>
+      <Menu/>
+      <main style={{ padding: '2rem' }}>
+        <Header items={headerItems} height={headerHeight} width={headerWidth} gap={headerGap} font={headerFont} createdBy={false}/>
+          <ContentBody/>
+          <ResetGame/>
+          <WordInfo/>
+        <Header items={footerItems} height={footerHeight} width={footerWidth} gap={footerGap} font={footerFont} createdBy={true}/>
+      </main>
+    </WordProvider>
     </>
   )
 }

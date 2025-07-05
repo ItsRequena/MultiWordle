@@ -60,6 +60,10 @@ button:active {
 
 .side-menu .contentOptions {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 95%; /* o la altura deseada */
 }
 
 .side-menu a {

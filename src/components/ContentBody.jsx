@@ -48,7 +48,6 @@ export function ContentBody(){
             if(win) return;
 
             const positionToInsert = getLetterPositionToInsert(letters, LETTERS)
-            console.log(positionToInsert)
             if (event.key === 'Backspace') {
 
                 if(positionToInsert == 0) return;

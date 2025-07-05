@@ -32,6 +32,10 @@ export function WordProvider({children}) {
         dateBorn: '',
         img: ''
     })
+    const [countryInfo, setCountryInfo] = useState({
+        name: '',
+        code: ''
+    })
 
     // Funcion encargada de comenzar el juego dependiendo del modo
     const startGame = async () => {
@@ -43,9 +47,13 @@ export function WordProvider({children}) {
                 LETTERS = 5;
                 break;
             case 'paises':
-                let country = getRandomCountry();
-                setFinalWord(country);
-                LETTERS = country.split('').length;
+                const country = getRandomCountry();
+                setFinalWord(country.nombre);
+                LETTERS = country.nombre.split('').length;
+                setCountryInfo({
+                    name: country.nombre,
+                    code: country.codigo.toLowerCase()
+                });
                 break;
             case 'jugadores':
                 let player = await getRandomPlayer();
@@ -101,7 +109,7 @@ export function WordProvider({children}) {
                 showPlayerModal(playerInfo, 5000)
                 break;
             case 'paises':
-                showCountryModal(finalWord, 5000);
+                showCountryModal(countryInfo, 5000);
                 break;
         }
     }

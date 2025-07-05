@@ -1,5 +1,3 @@
-import {getCountryImage} from '../services/getCountryImage.js'
-
 let inSlide = false;
 
 // Funcion para mostrar modal descendiente
@@ -19,13 +17,16 @@ export function showCountryModal(country, time) {
 
         // Nombre Pais
         const countryName = document.createElement('strong');
-        countryName.textContent = country;
+        countryName.textContent = country.name;
         modal.appendChild(countryName);
+
+        // Espacio
+        const space = document.createElement('br');
+        modal.appendChild(space);
 
         // Imagen
         const countryImage = document.createElement('img');
-        var img = getCountryImage(country)
-        countryImage.src = img;
+        countryImage.src = `https://flagcdn.com/w320/${country.code}.png`;
         modal.appendChild(countryImage);
 
         document.body.appendChild(modal);

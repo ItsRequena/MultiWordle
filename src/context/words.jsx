@@ -1,6 +1,14 @@
 import { createContext, useEffect, useState } from "react";
-import {wordList} from '../mocks/words.json'
-import {getRandomPlayerFromPopularTeams} from '../services/getPlayer.js'
+
+import { getRandomCountry } from "../services/getRandomCountry.js";
+import {getRandomPlayer} from '../services/getRandomPlayer.js'
+import {getRandomWord} from '../services/getRandomWord.js'
+
+import {showSlideModal} from '../hooks/showSlideModal.js'
+import {showPlayerModal} from '../hooks/showPlayerModal.js'
+import {showCountryModal} from '../hooks/showCountryModal.js'
+
+import confetti from 'canvas-confetti'
 
 let FILES = 6;
 let LETTERS = 5;
@@ -17,30 +25,85 @@ export function WordProvider({children}) {
     const [letters, setLetters] = useState(Array(LETTERS).fill([null,'']))
     const [attempt, setAttempt] = useState(0)
 
+    const [playerInfo, setPlayerInfo] = useState({
+        name: '',
+        team: '',
+        nationalTem: '',
+        dateBorn: '',
+        img: ''
+    })
+
     // Funcion encargada de comenzar el juego dependiendo del modo
     const startGame = async () => {
-        console.log('gameype',gameType);
+
         switch(gameType){
-        case 'jugadores':
-            let player = await getRandomPlayerFromPopularTeams();
-            setFinalWord(player.strPlayer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase());
-            LETTERS = player.strPlayer.split('').length;
-            console.log('LONGITUD: ', player.strPlayer.split('').length)
-            FILES = 10;
-            break;
-        case 'normal':
-            console.log('aqui');
-            let word = generateWord();
-            console.log(word);
-            setFinalWord(word);
-            LETTERS = 5;
-            break;
+            case 'normal':
+                let word = getRandomWord();
+                setFinalWord(word);
+                LETTERS = 5;
+                break;
+            case 'paises':
+                let country = getRandomCountry();
+                setFinalWord(country);
+                LETTERS = country.split('').length;
+                break;
+            case 'jugadores':
+                let player = await getRandomPlayer();
+                let playerName = player.strPlayer;
+                if(playerName.includes(' ')){
+                    let checkPlayerName = playerName.split(' ')[1];
+                    if(checkPlayerName.includes('-') || checkPlayerName.length < 3) checkPlayerName = playerName.split(' ')[0]
+                    playerName = checkPlayerName;
+                }
+
+                setFinalWord(playerName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase());
+                setPlayerInfo({
+                    name: player.strPlayer,
+                    team: player.strTeam,
+                    nationalTem: player.strNationality,
+                    dateBorn: player.dateBorn,
+                    img: player.strCutout ?? player.strThumb
+                });
+
+                LETTERS = playerName.split('').length;
+                break;
         }
     }
     
     // Funcion para comprobar si ha terminado el juego
     const isOver = () => {
         return win || attempt == FILES;
+    }
+
+    const checkNewTry = () => {
+        const goal = checkWord(letters, attempt);
+        if(goal){
+            confetti({
+                particleCount: 300,
+                spread: 100,
+                origin: { y: 0.5 }
+            });
+
+        }
+
+        if(goal || attempt+1 == FILES){
+            showModalGame(goal)
+        }
+    }
+
+    const showModalGame = (goal) => {
+        switch(gameType){
+            case 'normal':
+                if(goal) showSlideModal(`Enhorabuena!`, 5000)
+                else showSlideModal(`${finalWord}`, 5000)
+                break;
+            case 'jugadores':
+                showPlayerModal(playerInfo, 5000)
+                break;
+            case 'paises':
+                showCountryModal(finalWord, 5000);
+                break;
+        }
     }
 
     // Funcion para resetear la partida
@@ -53,23 +116,10 @@ export function WordProvider({children}) {
         setUsedLetters([]);
     }
 
-    // Funcion para generar una palabra de Wordle
-    const generateWord = () => {
-        const randomIndex = Math.floor(Math.random() * wordList.length)
-        let newWord = wordList[randomIndex];
-        if(newWord.includes('ñ')) return newWord;
-        newWord = newWord.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        return newWord.toUpperCase();
-    }
-
     // Funcion para comparar palabra introducida con la palabra a acertar y devolver la palabra y sus aciertos
     const checkLetterToLetter = (wordArray) => {
         const newWordArray = JSON.parse(JSON.stringify(wordArray)); // copia profunda
         const finalWordArray = finalWord.split('');
-
-        console.log('wordArray', wordArray);
-        console.log('newWordArray', newWordArray);
-        console.log('finalWordArray', finalWordArray);
 
         // 1. Contar cuántas veces aparece cada letra en finalWord
         const letterCount = {};
@@ -139,6 +189,7 @@ export function WordProvider({children}) {
             win,
             letters,
             attempt,
+            gameType,
             setBoard,
             setGameType,
             setLetters,
@@ -146,6 +197,7 @@ export function WordProvider({children}) {
             checkWord,
             resetGame,
             isOver,
+            checkNewTry,
             LETTERS,
             FILES
         }}>

@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useContext, useState } from 'react'
+import { WordContext } from "../context/words.jsx"
 import { styled } from '@stitches/react'
 import { useTrail, animated } from '@react-spring/web'
 
@@ -54,7 +55,10 @@ const BackBox = styled(animated.div, {
 })
 
 
-export function Header({items, height, width, gap, font, createdBy}) {
+export function Header({height, width, gap, font, createdBy}) {
+
+  const [items, setItems] = useState([]);
+  const {gameType} = useContext(WordContext);
 
   const isFlipped = useRef(false)
 
@@ -75,6 +79,26 @@ export function Header({items, height, width, gap, font, createdBy}) {
       isFlipped.current = true
     }
   }
+
+  useEffect(() => {
+
+    if(createdBy){
+      setItems(['I','T','S','R', 'E', 'Q', 'U', 'E', 'N', 'A']);
+      return;
+    }
+     
+    switch(gameType){
+      case 'normal':
+        setItems(['W','O','R','D', 'L', 'E']);
+        break;
+      case 'jugadores':
+        setItems(['F','U','T','B', 'O', 'L']);
+        break;
+      case 'paises':
+        setItems(['P','A','I','S', 'E', 'S']);
+        break;
+    }
+  }, [gameType])
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -107,3 +107,51 @@ animation: shake 0.5s;
 80% { transform: translateX(5px); }
 100% { transform: translateX(0); }
 }
+
+
+/* Fondo semitransparente detrás del modal */
+#modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Modal principal */
+#slideModal {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  transition: top 0.5s ease, opacity 0.5s ease;
+  z-index: 1000;
+  text-align: center;
+  min-width: 300px;
+  gap: 5px;
+}
+
+#slideModal.show {
+  top: 20%;
+}
+
+#slideModal.fadeOut {
+  opacity: 0;
+}
+
+#slideModal img {
+  width: 200px;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+#slideModal p {
+  margin: 10px 0;
+  font-size: 16px;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+

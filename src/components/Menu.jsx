@@ -26,9 +26,6 @@ export function Menu() {
 
     setGameType(game);
     toggleMenu();
-    // new Promise(resolve => setTimeout(resolve, 2000));
-    // resetGame();
-
   }
 
   return (

@@ -24,11 +24,11 @@ function App() {
     <WordProvider>
       <Menu/>
       <main style={{ padding: '2rem' }}>
-        <Header items={headerItems} height={headerHeight} width={headerWidth} gap={headerGap} font={headerFont} createdBy={false}/>
+        <Header height={headerHeight} width={headerWidth} gap={headerGap} font={headerFont} createdBy={false}/>
           <ContentBody/>
           <ResetGame/>
           <WordInfo/>
-        <Header items={footerItems} height={footerHeight} width={footerWidth} gap={footerGap} font={footerFont} createdBy={true}/>
+        <Header height={footerHeight} width={footerWidth} gap={footerGap} font={footerFont} createdBy={true}/>
       </main>
     </WordProvider>
     </>

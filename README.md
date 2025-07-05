@@ -36,4 +36,15 @@ Pon a prueba tus conocimientos de geografía adivinando el país oculto.
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/TU-USUARIO/TU-REPO.git
+git clone https://github.com/ItsRequena/MultiWordle.git
+```
+
+2. Instala als dependencias:
+```bash
+npm install
+```
+
+3. Ejecuta la aplicación en modo desarrollo:
+```bash
+npm run dev
+```

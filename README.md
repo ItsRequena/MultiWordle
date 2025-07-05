@@ -1,12 +1,38 @@
-# React + Vite
+![image](https://github.com/user-attachments/assets/8d76952c-58de-48ee-8389-09c18bc85859)# ⚽🌍 MultiWordle - React App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+¡Bienvenido a **MultiWordle**!  
+Una aplicación web hecha en **React** que combina el clásico juego del **Wordle** con nuevos modos de juego temáticos.
 
-Currently, two official plugins are available:
+## 🎮 Modos de Juego
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🔤 **Modo Clásico:**  
+El Wordle habitual. Adivina la palabra secreta de 5 letras.
 
-## Expanding the ESLint configuration
+⚽ **Modo Jugadores de Fútbol:**  
+Adivina el nombre del jugador de fútbol oculto.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+🌎 **Modo Países:**  
+Pon a prueba tus conocimientos de geografía adivinando el país oculto.
+
+---
+
+## 🖥️ Vista Previa
+<!-- Puedes añadir aquí una imagen o GIF -->
+![MultiWordle Screenshot](https://github.com/user-attachments/assets/0b6b0789-846e-4c9d-a3ea-e066b4a2c48f)
+
+
+## 🚀 Tecnologías Usadas
+
+- React (Vite)
+- JavaScript
+- CSS
+- APIs externas para jugadores
+- Flexbox & Responsive Design
+
+---
+
+## 📦 Instalación
+
+1. Clona el repositorio:
+```bash
+git clone https://github.com/TU-USUARIO/TU-REPO.git

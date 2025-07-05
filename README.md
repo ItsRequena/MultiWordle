@@ -1,4 +1,5 @@
-![image](https://github.com/user-attachments/assets/8d76952c-58de-48ee-8389-09c18bc85859)# ⚽🌍 MultiWordle - React App
+
+# ⚽🌍 MultiWordle - React App
 
 ¡Bienvenido a **MultiWordle**!  
 Una aplicación web hecha en **React** que combina el clásico juego del **Wordle** con nuevos modos de juego temáticos.

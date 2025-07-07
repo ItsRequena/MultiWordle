@@ -35,14 +35,14 @@ export function Menu() {
             <ul>
                 <li><h4 className='blocked' href="#">Modos de Juego</h4></li>
                 <li>
-                    <a href="#" onClick={() => openGame('normal')}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-grid2x2 size-4">
-                            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-                            <path d="M3 12h18"></path>
-                            <path d="M12 3v18"></path>
-                        </svg>
-                        Normal
-                    </a>
+                  <a href="#" onClick={() => openGame('normal')}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-grid2x2 size-4">
+                          <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+                          <path d="M3 12h18"></path>
+                          <path d="M12 3v18"></path>
+                      </svg>
+                      Normal
+                  </a>
                 </li>
                 <li>
                     <a href="#" onClick={() => openGame('paises')}>
@@ -55,12 +55,21 @@ export function Menu() {
                     </a>
                 </li>
                 <li>
-                    <a href="#" onClick={() => openGame('jugadores')}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-tshirt size-4">
-                        <path d="M4 4L8 2l4 2 4-2 4 2v3a2 2 0 0 1-2 2h-1v11H7V9H6a2 2 0 0 1-2-2V4z" />
-                        </svg>
-                        Jugadores
-                    </a>
+                  <a href="#" onClick={() => openGame('jugadores')}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-tshirt size-4">
+                      <path d="M4 4L8 2l4 2 4-2 4 2v3a2 2 0 0 1-2 2h-1v11H7V9H6a2 2 0 0 1-2-2V4z" />
+                      </svg>
+                      Jugadores
+                  </a>
+                </li>
+                <li>
+                  <a href="#" onClick={() => openGame('jugadores')}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path fill="#FFF" d="M23.498 6.186a2.994 2.994 0 0 0-2.108-2.113C19.659 3.5 12 3.5 12 3.5s-7.659 0-9.39.573A2.994 2.994 0 0 0 .502 6.186 31.284 31.284 0 0 0 0 12a31.284 31.284 0 0 0 .502 5.814 2.994 2.994 0 0 0 2.108 2.113C4.341 20.5 12 20.5 12 20.5s7.659 0 9.39-.573a2.994 2.994 0 0 0 2.108-2.113A31.284 31.284 0 0 0 24 12a31.284 31.284 0 0 0-.502-5.814z"/>
+                      <path fill="#000" d="M9.75 15.02v-6.04L15.5 12l-5.75 3.02z"/>
+                    </svg>
+                    Youtubers
+                  </a>
                 </li>
             </ul>
             <ul>

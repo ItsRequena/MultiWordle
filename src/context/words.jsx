@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { getRandomCountry } from "../services/getRandomCountry.js";
 import {getRandomPlayer} from '../services/getRandomPlayer.js'
 import {getRandomWord} from '../services/getRandomWord.js'
+import {priorityColor} from '../hooks/priorityColor.js'
 
 import {showSlideModal} from '../hooks/showSlideModal.js'
 import {showPlayerModal} from '../hooks/showPlayerModal.js'
@@ -83,6 +84,7 @@ export function WordProvider({children}) {
         return win || attempt == FILES;
     }
 
+    // Funcion para comprobar el intento
     const checkNewTry = () => {
         const goal = checkWord(letters, attempt);
         if(goal){
@@ -99,17 +101,18 @@ export function WordProvider({children}) {
         }
     }
 
+    // Funcion para mostrar modal segun modo de juego
     const showModalGame = (goal) => {
         switch(gameType){
             case 'normal':
-                if(goal) showSlideModal(`Enhorabuena!`, 5000)
-                else showSlideModal(`${finalWord}`, 5000)
+                if(goal) showSlideModal(`Enhorabuena!`, 3000)
+                else showSlideModal(`${finalWord}`, 3000)
                 break;
             case 'jugadores':
-                showPlayerModal(playerInfo, 5000)
+                showPlayerModal(playerInfo, 3000)
                 break;
             case 'paises':
-                showCountryModal(countryInfo, 5000);
+                showCountryModal(countryInfo, 3000);
                 break;
         }
     }
@@ -124,7 +127,73 @@ export function WordProvider({children}) {
         setUsedLetters([]);
     }
 
-    // Funcion para comparar palabra introducida con la palabra a acertar y devolver la palabra y sus aciertos
+    // Funcion privada para comparar palabra introducida y la palabra a acertar
+    const checkWord = (wordArray, attempt) => {
+
+        // Comprobar letras
+        const newWordArray = checkLetterToLetter(wordArray);
+
+        // Actualizar tablero
+        const newBoard = [...board];
+        newBoard[attempt] = newWordArray;
+        setBoard(newBoard);
+
+        // Aumentar las letras usadas
+        updateNewLettersUsed(newWordArray);
+
+        // Comprobar palabra
+        const word = newWordArray.map(par => par[0]).join('');
+        if(word == finalWord){
+            setWin(true);
+            return true;
+        }
+
+        return false;
+    }
+
+    // Funcion privada 
+    const updateNewLettersUsed = (newWordArray) => {
+        let copyUsedLetters = usedLetters
+        let newLetters = [];
+        let exist = false;
+        let color = ''
+        let index = 0
+        let item = [];
+
+        newWordArray.forEach(letter => {
+            usedLetters.forEach(usedLetter => {
+                // Comprobar si ya existe la letra pero tiene otro color
+                if(usedLetter[0] == letter[0]){
+                    exist = true;
+                    if(usedLetter[1] != letter[1]){
+                        color = priorityColor(usedLetter[1], letter[1]);
+                        index = copyUsedLetters.indexOf(usedLetter);
+                        copyUsedLetters[index] = [usedLetter[0],color]; 
+                    }
+                }
+            });
+
+            if(!exist){
+                item = newLetters.find(item => item[0] == letter[0]);
+                if(item == null){
+                    newLetters.push(letter);
+                }
+                else{
+                    color = priorityColor(item[1], letter[1]);
+                    if(item != null && color != item[1]){
+                        newLetters.push(letter);
+                    }
+                }
+            }
+
+            exist = false;
+        });
+
+        const newLettersToUpdate = [...new Set([...copyUsedLetters, ...newLetters])];
+        setUsedLetters(newLettersToUpdate);
+    }
+
+    // Funcion privada para comparar palabra introducida con la palabra a acertar y devolver la palabra y sus aciertos
     const checkLetterToLetter = (wordArray) => {
         const newWordArray = JSON.parse(JSON.stringify(wordArray)); // copia profunda
         const finalWordArray = finalWord.split('');
@@ -158,31 +227,6 @@ export function WordProvider({children}) {
         }
 
         return newWordArray;
-    }
-
-    // Funcion para comparar palabra introducida y la palabra a acertar
-    const checkWord = (wordArray, attempt) => {
-
-        // Comprobar letras
-        const newWordArray = checkLetterToLetter(wordArray);
-
-        // Actualizar tablero
-        const newBoard = [...board];
-        newBoard[attempt] = newWordArray;
-        setBoard(newBoard);
-
-        // Aumentar las letras usadas
-        const newLetters = [...new Set([...usedLetters, ...newWordArray])];
-        setUsedLetters(newLetters);
-
-        // Comprobar palabra
-        const word = newWordArray.map(par => par[0]).join('');
-        if(word == finalWord){
-            setWin(true);
-            return true;
-        }
-
-        return false;
     }
 
     useEffect(() => {

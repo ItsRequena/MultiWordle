@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { getRandomCountry } from "../services/getRandomCountry.js";
 import {getRandomPlayer} from '../services/getRandomPlayer.js'
 import {getRandomWord} from '../services/getRandomWord.js'
+import {getRandomYoutuber} from '../services/getRandomYoutuber.js'
 import {priorityColor} from '../hooks/priorityColor.js'
 
 import {showSlideModal} from '../hooks/showSlideModal.js'
@@ -76,6 +77,11 @@ export function WordProvider({children}) {
 
                 LETTERS = playerName.split('').length;
                 break;
+            case 'youtubers':
+                let youtuber = getRandomYoutuber();
+                setFinalWord(youtuber);
+                LETTERS = youtuber.length;
+                break;
         }
     }
     
@@ -105,6 +111,7 @@ export function WordProvider({children}) {
     const showModalGame = (goal) => {
         switch(gameType){
             case 'normal':
+            case 'youtubers':
                 if(goal) showSlideModal(`Enhorabuena!`, 3000)
                 else showSlideModal(`${finalWord}`, 3000)
                 break;

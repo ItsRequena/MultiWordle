@@ -15,6 +15,9 @@ Adivina el nombre del jugador de fútbol oculto.
 🌎 **Modo Países:**  
 Pon a prueba tus conocimientos de geografía adivinando el país oculto.
 
+📺 **Modo YouTubers:**  
+Demuestra tu conocimiento sobre creadores de contenido adivinando el YouTuber oculto.
+
 ---
 
 ## 🖥️ Vista Previa

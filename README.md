@@ -24,6 +24,9 @@ Demuestra tu conocimiento sobre creadores de contenido adivinando el YouTuber oc
 <!-- Puedes añadir aquí una imagen o GIF -->
 ![MultiWordle Screenshot](https://github.com/user-attachments/assets/0b6b0789-846e-4c9d-a3ea-e066b4a2c48f)
 
+## 🎮 Juega
+
+Accede a traves del siguiente enlace y pruebalo: https://itsrequena.github.io/MultiWordle/
 
 ## 🚀 Tecnologías Usadas
 
@@ -51,3 +54,4 @@ npm install
 ```bash
 npm run dev
 ```
+
